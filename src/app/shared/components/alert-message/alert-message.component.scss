@@ -1,0 +1,44 @@
+.alerts {
+  position: fixed;
+  z-index: 99999;
+  bottom: 20px;
+  right: 20px;
+
+  .alert {
+    margin-top: 8px;
+    width: 350px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    background: #1dd1a1;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    border-radius: 4px;
+    padding: 0 20px;
+    box-sizing: border-box;
+    opacity: 0;
+    transition: opacity 0.1s ease-in;
+    line-height: 1;
+
+    &.danger {
+      background: #d63031;
+    }
+
+    &.show {
+      opacity: 1;
+      transition: opacity 0.1s ease-in;
+    }
+
+    &__message {
+      color: #ffffff;
+      line-height: 1.2;
+    }
+
+    &__icon {
+      color: #ffffff;
+      font-size: 20px;
+      margin-right: 20px;
+    }
+
+  }
+
+}

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="51.33" height="59.55" viewBox="0 0 51.33 59.55">
+  <g id="Group_68" data-name="Group 68" transform="translate(-31.836 -28.943)">
+    <g id="file-text" transform="translate(33.836 34.681)">
+      <path id="Path_53" data-name="Path 53" d="M29.906,2H9.181A5.181,5.181,0,0,0,4,7.181v41.45a5.2,5.2,0,0,0,5.181,5.181H40.269a5.181,5.181,0,0,0,5.181-5.181V17.544Z" transform="translate(-4 -2)" fill="none" stroke="#4aaacd" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"/>
+      <path id="Path_54" data-name="Path 54" d="M8.6,19.151,28.725,19.1H8M28.725,29.466H8M13.181,8.742H8" transform="translate(2.362 9.393)" fill="none" stroke="#4aaacd" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"/>
+    </g>
+    <g id="x" transform="translate(58.503 31.772)">
+      <line id="Line_14" data-name="Line 14" x1="21.835" y2="21.835" transform="translate(0 0)" fill="none" stroke="#ffc50c" stroke-linecap="round" stroke-linejoin="bevel" stroke-width="4"/>
+      <line id="Line_15" data-name="Line 15" x2="21.835" y2="21.835" transform="translate(0 0)" fill="none" stroke="#ffc50c" stroke-linecap="round" stroke-linejoin="bevel" stroke-width="4"/>
+    </g>
+  </g>
+</svg>

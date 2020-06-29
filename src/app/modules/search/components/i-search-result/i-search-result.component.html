@@ -1,0 +1,128 @@
+<div class="workspace">
+  <div class="workspace__scrollbar">
+    <div class="sidebar">
+      <div class="card">
+        <div class="title"><strong>Категории:</strong></div>
+        <div class="categories">
+          <div class="category" *ngFor="let cat of categories"
+               (click)="getActs(cat)"
+               [ngClass]="cat.isActive ? 'active' : ''">
+            <div class="category__probability">
+              <div>{{cat.probability * 100}}%</div>
+            </div>
+            <div class="category__name">{{cat.name}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="content">
+      <div class="card margin-bottom">
+        <div class="title"><strong>Список вероятных исходов по Вашему запросу:</strong></div>
+        <ng-container *ngFor="let p of predicts">
+          <div class="progress">
+            <div class="progress__icon">
+              <img alt="" [src]="getIcon(p.class_icon)"/>
+            </div>
+            <div class="progress__data">
+              <div>{{p.class}}</div>
+            </div>
+            <div class="progress__bar">
+              <div class="progressbar">
+                <span>{{p.proba}}%</span>
+                <div class="progressbar__value" [ngStyle]="{width: p.proba + '%'}"></div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+      <div class="card margin-bottom">
+        <div class="title"><strong>Аномалии:</strong></div>
+        <div class="cards">
+          <div class="cards__scrollbar">
+            <ng-container *ngFor="let a of actGroupsAnomaly">
+              <div class="cardview" [ngClass]="getAnomalyColor(a['anomaly'])">
+                <div class="buttons">
+                  <div class="btn" (click)="openAct(a, 'first_instances')">
+                    <span class="icon-external-link"></span>
+                  </div>
+                  <div class="btn" (click)="download(a)">
+                    <span class="icon-download"></span>
+                  </div>
+                </div>
+                <div class="number">{{a['act']['act_number']}}</div>
+                <div class="date">
+                  <span class="icon-calendar"></span>
+                  {{a['act']['registration_date'] | date: 'dd.MM.yyyy'}}
+                </div>
+                <div class="court">
+                  <span class="icon-home"></span>
+                  <ng-container *ngIf="a['act']['court']">
+                    {{a['act']['court']['name']}}
+                  </ng-container>
+                </div>
+                <div class="result">
+                  <span class="icon-folder"></span>
+                  {{a['act']['result']['name']}}
+                </div>
+                <div class="classification">
+                  <div class="claimant"><span class="icon-user"></span> {{capitalize(a['act']['claimant'])}}</div>
+                  <div class="defendant"><span class="icon-user"></span> {{capitalize(a['act']['defendant'])}}</div>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <table mat-table [dataSource]="actGroups">
+          <ng-container matColumnDef="act_number">
+            <th width="15%" mat-header-cell *matHeaderCellDef>Номер дела</th>
+            <td mat-cell *matCellDef="let element">
+              <div>{{element['act']['act_number']}}</div>
+              <div class="date">
+                <span class="icon-calendar"></span>
+                {{element['act']['registration_date'] | date: 'dd.MM.yyyy'}}
+              </div>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="claimant">
+            <th mat-header-cell *matHeaderCellDef>Стороны процесса</th>
+            <td mat-cell *matCellDef="let element">
+              <div class="claimant"><span class="icon-user"></span> {{capitalize(element['act']['claimant'])}}</div>
+              <div class="defendant"><span class="icon-user"></span> {{capitalize(element['act']['defendant'])}}
+              </div>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="result">
+            <th width="30%" mat-header-cell *matHeaderCellDef>Результат рассмотрения</th>
+            <td mat-cell *matCellDef="let element">
+              <div>
+                <span class="icon-home"></span>
+                <ng-container *ngIf="element['act']['court']">
+                  {{element['act']['court']['name']}}
+                </ng-container>
+              </div>
+              <div><span class="icon-folder"></span> {{element['act']['result']['name']}}</div>
+              <div class="gray">{{element['act']['classification']['name']}}</div>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="tools">
+            <th width="10%" mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element">
+              <div class="buttons">
+                <div class="btn" (click)="openAct(element, 'first_instances')">
+                  <span class="icon-external-link"></span>
+                </div>
+                <div class="btn" (click)="download(element)">
+                  <span class="icon-download"></span>
+                </div>
+              </div>
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+          <tr mat-row *matRowDef="let row, columns: displayedColumns;"></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

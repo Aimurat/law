@@ -1,0 +1,30 @@
+.alert {
+  position: fixed;
+  width: 250px;
+  height: 60px;
+  z-index: 9999;
+  bottom: 20px;
+  right: 20px;
+  align-items: center;
+  justify-content: space-between;
+  background: #1f2e54;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  border-radius: 4px;
+  padding: 0 20px;
+  box-sizing: border-box;
+  display: none;
+  line-height: 1;
+
+  &.show {
+    display: flex;
+  }
+
+  &__message {
+    color: #ffffff;
+    margin-right: 40px;
+  }
+
+  &__spinner {
+  }
+
+}

@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="55.924" height="55.923" viewBox="0 0 55.924 55.923">
+  <g id="Group_57" data-name="Group 57" transform="translate(0.631 0.082)">
+    <path id="octagon" d="M18.093,2H40.831l6.441,6.441,9.651,9.651V40.831L40.831,56.923H18.093L2,40.831V18.093Z" transform="translate(-2.131 -1.582)" fill="#e5191b" stroke="#fff" stroke-linejoin="bevel" stroke-width="1" opacity="0.9"/>
+    <text id="Stop" transform="translate(12.369 32.918)" fill="#fff" font-size="15" font-family="SegoeUI, Segoe UI"><tspan x="0" y="0">Stop</tspan></text>
+  </g>
+</svg>

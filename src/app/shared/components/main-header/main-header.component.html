@@ -1,0 +1,44 @@
+<div class="header" *ngIf="user">
+
+  <div class="header__logo">
+    <div class="logo">
+      <span>SA</span>
+    </div>
+    <div class="logo-text">
+      <span>Цифровая аналитика</span>
+      <span>судебной практики</span>
+    </div>
+  </div>
+
+  <div class="header__navigation">
+    <div class="header__navigation__item" [routerLink]="['/search']" [routerLinkActive]="'active'">
+      <div class="header__navigation__item__name">Поиск</div>
+    </div>
+    <ng-container *ngIf="isResult">
+      <div class="header__navigation__item" [routerLink]="['/result']" [routerLinkActive]="'active'">
+        <div class="header__navigation__item__name">Результаты поиска</div>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="isAct">
+      <div class="header__navigation__item active">
+        <div class="header__navigation__item__name">Дело</div>
+      </div>
+    </ng-container>
+  </div>
+
+  <div class="space"></div>
+
+  <div class="header__user">
+    <div class="header__user__avatar"><span></span></div>
+    <div class="header__user__name">{{user.username}}</div>
+  </div>
+
+  <div class="header__navigation">
+    <div class="header__navigation__item" (click)="logout()">
+      <div class="header__navigation__item__name">
+        <span class="icon-log-out"></span>
+      </div>
+    </div>
+  </div>
+
+</div>

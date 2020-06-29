@@ -1,0 +1,8 @@
+<ng-container *ngIf="data">
+  <div class="alert" [ngClass]="!data.status ? 'show' : ''">
+    <div class="alert__message">{{data.message}}</div>
+    <div class="alert__spinner">
+      <mat-spinner color="accent" [diameter]="25"></mat-spinner>
+    </div>
+  </div>
+</ng-container>

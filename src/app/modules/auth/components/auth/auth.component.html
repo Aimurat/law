@@ -1,0 +1,29 @@
+<div class="content">
+  <div class="sidebar">
+    <div class="logo">
+      <div class="title"><span>Smart</span>Analytic</div>
+      <div class="sub-title">
+        Цифровая аналитика судебной практики
+      </div>
+    </div>
+    <div class="form">
+      <form [formGroup]="form" (ngSubmit)="auth()">
+        <label>
+          Email:
+          <input class="form-control" type="text" placeholder="Логин" formControlName="username" [(ngModel)]="username">
+        </label>
+        <label>
+          Пароль:
+          <input class="form-control" type="password" placeholder="Пароль" formControlName="password"
+                 [(ngModel)]="password">
+        </label>
+        <button type="submit" [disabled]="!form.valid || !isLoaded">
+          Войти
+        </button>
+      </form>
+    </div>
+  </div>
+  <div class="body">
+
+  </div>
+</div>

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="65.313" height="50.98" viewBox="0 0 65.313 50.98">
+  <g id="Group_75" data-name="Group 75" transform="translate(-1212.971 -447.463)">
+    <path id="defenition" d="M156.4,231.13a4.493,4.493,0,0,1,4.479,4.479V262.5a4.492,4.492,0,0,1-4.479,4.479H114.8a4.492,4.492,0,0,1-4.479-4.479V235.617a4.492,4.492,0,0,1,4.479-4.479h41.6v-.008Zm0-4.479H114.8a8.978,8.978,0,0,0-8.965,8.965v26.895a8.978,8.978,0,0,0,8.965,8.965h41.6a8.978,8.978,0,0,0,8.965-8.965V235.617a8.978,8.978,0,0,0-8.965-8.965m-21.153,17.937H118.491a2.275,2.275,0,0,1,0-4.549h16.753a2.275,2.275,0,0,1,0,4.549ZM152.781,258H118.49a2.236,2.236,0,1,1,0-4.471h34.283a2.236,2.236,0,0,1,.02,4.471Zm-7.31-17.938h8.965v8.965h-8.965Z" transform="translate(1107.14 226.967)" fill="#4aaacd"/>
+    <g id="x" transform="translate(1253.779 450.292)">
+      <line id="Line_14" data-name="Line 14" x1="21.675" y2="21.675" transform="translate(0 0)" fill="none" stroke="#ffc50c" stroke-linecap="round" stroke-linejoin="bevel" stroke-width="4"/>
+      <line id="Line_15" data-name="Line 15" x2="21.675" y2="21.675" transform="translate(0 0)" fill="none" stroke="#ffc50c" stroke-linecap="round" stroke-linejoin="bevel" stroke-width="4"/>
+    </g>
+  </g>
+</svg>

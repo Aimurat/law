@@ -1,0 +1,41 @@
+mat-form-field {
+  width: 100% !important;
+}
+
+.mat-dialog-container {
+  padding: 0 !important;
+}
+
+.mat-dialog-title {
+  margin: 0 !important;
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  padding: 10px 15px !important;
+  box-sizing: border-box !important;
+  cursor: move;
+  color: #333333;
+  border-bottom: 1px solid rgba(0,0,0,.12);
+}
+
+.mat-dialog-content {
+  padding: 0 !important;
+  margin: 0 !important;
+
+  &.padding {
+    padding: 10px 15px 3px !important;
+  }
+
+}
+
+.mat-dialog-actions {
+  padding: 10px !important;
+  box-sizing: border-box !important;
+  min-height: auto !important;
+  margin-bottom: 0 !important;
+
+  button {
+    font-size: 14px !important;
+    font-weight: normal;
+  }
+
+}

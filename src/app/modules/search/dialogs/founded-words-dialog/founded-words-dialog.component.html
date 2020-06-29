@@ -1,0 +1,14 @@
+<div mat-dialog-title>Совпадения</div>
+<mat-dialog-content class="mat-typography padding">
+  <div class="content">
+    <ng-container *ngFor="let h of highlights; let i = index">
+      <div class="item">
+        <span class="counter">{{i+1}})</span>
+        <span [innerHTML]="h"></span>
+      </div>
+    </ng-container>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Закрыть</button>
+</mat-dialog-actions>

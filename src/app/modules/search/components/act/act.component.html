@@ -1,0 +1,100 @@
+<div class="workspace">
+  <div class="workspace__scrollbar" *ngIf="isLoaded">
+    <div class="sidebar">
+      <div class="steps">
+        <div class="step" (click)="toInstance('first_instance')">
+          <div class="step__circle" [ngClass]="getClass('first_instances')">
+            <div class="step__circle__inner">
+              <img alt="" [src]="getIcon('first_instances')" />
+            </div>
+          </div>
+          <div class="step__name">
+            <div><span>1. Инстанция</span></div>
+            <span>Районный суд</span>
+          </div>
+        </div>
+        <div class="next"></div>
+        <div class="step" (click)="toInstance('appeal')">
+          <div class="step__circle" [ngClass]="getClass('appeals')">
+            <div class="step__circle__inner">
+              <img alt="" [src]="getIcon('appeals')" />
+            </div>
+          </div>
+          <div class="step__name">
+            <div><span>2. Аппеляция</span></div>
+            <span>Городской суд</span>
+          </div>
+        </div>
+        <div class="next"></div>
+        <div class="step" (click)="toInstance('cassation')">
+          <div class="step__circle" [ngClass]="getClass('cassations')">
+            <div class="step__circle__inner">
+              <img alt="" [src]="getIcon('cassations')" />
+            </div>
+          </div>
+          <div class="step__name">
+            <div><span>3. Кассация</span></div>
+            <span>Верховный суд</span>
+          </div>
+        </div>
+      </div>
+      <div class="legend">
+        <div class="legend__item">
+          <div class="icon"><img alt="" [src]="getIcon('first_instances')" /></div>
+          <div class="name">{{getName('first_instances')}}</div>
+        </div>
+        <div class="legend__item">
+          <div class="icon"><img alt="" [src]="getIcon('appeals')" /></div>
+          <div class="name">{{getName('appeals')}}</div>
+        </div>
+        <div class="legend__item">
+          <div class="icon"><img alt="" [src]="getIcon('cassations')" /></div>
+          <div class="name">{{getName('cassations')}}</div>
+        </div>
+      </div>
+      <div class="info">
+        <div class="row">
+          <span class="title">Номер дела:</span>
+          <span class="text">{{act?.act_number}}</span>
+        </div>
+        <div class="row">
+          <span class="title">Судебный орган:</span>
+          <span class="text">{{act?.court?.name}}</span>
+        </div>
+        <div class="row">
+          <span class="title">Истец:</span>
+          <span class="text">{{act?.claimant}}</span>
+        </div>
+        <div class="row">
+          <span class="title">Ответчик:</span>
+          <span class="text">{{act?.defendant}}</span>
+        </div>
+        <div class="row">
+          <span class="title">Результаты рассмотрения:</span>
+          <span class="text">{{act?.result?.name}}</span>
+        </div>
+        <div class="row">
+          <span class="title">Категория дела:</span>
+          <span class="text">{{act?.classification?.name}}</span>
+        </div>
+        <div class="row">
+          <span class="title">Дата:</span>
+          <span class="text">{{act?.registration_date | date: 'dd.MM.yy'}}</span>
+        </div>
+        <div class="row">
+          <span class="title">Судья:</span>
+          <span class="text">{{act?.judge?.name}}</span>
+        </div>
+        <div class="row">
+          <span class="title">Область, город: </span>
+          <span class="text">{{act?.region?.name}}</span>
+        </div>
+      </div>
+    </div>
+    <div class="content">
+      <div class="card">
+        <div class="html" [innerHTML]="act?.depersonalized_text"></div>
+      </div>
+    </div>
+  </div>
+</div>

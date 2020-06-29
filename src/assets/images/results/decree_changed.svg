@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="60.314" height="57.083" viewBox="0 0 60.314 57.083">
+  <g id="Group_69" data-name="Group 69" transform="translate(-29.93 -25.52)">
+    <path id="folder" d="M56.187,46.35a5.419,5.419,0,0,1-5.419,5.419H7.419A5.419,5.419,0,0,1,2,46.35V8.419A5.419,5.419,0,0,1,7.419,3H20.965l5.419,8.128H50.768a5.419,5.419,0,0,1,5.419,5.419Z" transform="translate(29.929 28.834)" fill="none" stroke="#4aaacd" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"/>
+    <g id="edit" transform="translate(58.72 25.52)">
+      <g id="Group_51" data-name="Group 51" transform="translate(0 0)">
+        <path id="Path_56" data-name="Path 56" d="M5.633,30.592l-.033,6.5a1.411,1.411,0,0,0,.4,1,1.335,1.335,0,0,0,.966.4l6.464-.033a1.335,1.335,0,0,0,.966-.4L36.722,15.73a1.408,1.408,0,0,0,0-1.966L30.325,7.3a1.408,1.408,0,0,0-1.966,0l-4.465,4.5L6.033,29.625A1.484,1.484,0,0,0,5.633,30.592ZM29.358,10.232l4.5,4.5-2.532,2.532-4.5-4.5ZM8.4,31.191,24.86,14.731l4.5,4.5L12.9,35.657l-4.532.033.033-4.5Z" transform="translate(-5.6 -6.9)" fill="#ffc50c"/>
+      </g>
+    </g>
+  </g>
+</svg>

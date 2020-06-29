@@ -1,0 +1,208 @@
+.workspace {
+  height: 100%;
+  position: relative;
+
+  &::after {
+    content: "";
+    background: #efedec url('~src/assets/images/bg.png') bottom center no-repeat;
+    background-size: cover;
+    opacity: 0.02;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    z-index: -1;
+  }
+
+  &__scrollbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow-y: auto;
+    display: flex;
+
+    .sidebar {
+      width: 500px;
+      margin-right: 10px;
+
+      .info {
+        padding: 15px;
+        box-sizing: border-box;
+        background: white;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+
+        .row {
+          margin-bottom: 10px;
+          padding-bottom: 10px;
+          border-bottom: 1px solid #ecf0f1;
+          display: flex;
+          flex-direction: column;
+
+          &:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+          }
+
+          .title {
+            color: #000000;
+            font-weight: bold;
+          }
+
+          .text {
+            color: #2c3e50;
+            font-size: 14px;
+          }
+        }
+
+      }
+
+      .legend {
+        background: white;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        padding: 15px;
+        margin-bottom: 10px;
+
+        &__item {
+          display: flex;
+          align-items: center;
+          margin-bottom: 10px;
+
+          &:last-child {
+            margin-bottom: 0;
+          }
+
+          .icon {
+            margin-right: 10px;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: linear-gradient(to bottom, rgba(#1592e6, 0.2), rgba(#117fc8, 0.2), rgba(#0e6dab, 0.2), rgba(#0c5a8e, 0.2), rgba(#0b4973, 0.2));
+
+            img {
+              width: 15px;
+            }
+          }
+
+          .name {
+
+          }
+
+        }
+
+      }
+
+      .steps {
+        display: flex;
+        justify-content: space-between;
+        background: white;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        margin-bottom: 10px;
+        padding-bottom: 15px;
+
+        .next {
+          width: 45px;
+          height: 35px;
+          transform: rotate(90deg);
+          background: url('~src/assets/images/circle/next.svg') center center no-repeat;
+          background-size: contain;
+          position: relative;
+          top: 45px;
+        }
+
+        .step {
+
+          &__circle {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 130px;
+            height: 130px;
+            background: url('~src/assets/images/circle/circle.svg') center center no-repeat;
+            background-size: contain;
+            border-radius: 100px;
+            cursor: pointer;
+
+            &.active,
+            &:hover {
+              background: url('~src/assets/images/circle/circle-hover.svg') center center no-repeat;
+              background-size: contain;
+
+              .step__circle__inner {
+                background: linear-gradient(to bottom, #1592e6, #117fc8, #0e6dab, #0c5a8e, #0b4973);
+              }
+
+            }
+
+            &__inner {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              width: 80px;
+              height: 80px;
+              border-radius: 50%;
+              background: linear-gradient(to bottom, rgba(#1592e6, 0.2), rgba(#117fc8, 0.2), rgba(#0e6dab, 0.2), rgba(#0c5a8e, 0.2), rgba(#0b4973, 0.2));
+
+              img {
+                width: 30px;
+              }
+
+            }
+
+          }
+
+          &__name {
+            text-align: center;
+
+            > div {
+              > span {
+                text-transform: uppercase;
+                text-decoration: underline;
+                font-size: 14px;
+              }
+            }
+
+            > span {
+              font-size: 12px;
+            }
+
+          }
+
+        }
+
+      }
+
+    }
+
+    .content::ng-deep {
+
+      .card {
+        flex: 1;
+        background: white;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        padding: 15px;
+        box-sizing: border-box;
+
+        .html {
+          font-size: 14px;
+
+          .hidden_text {
+            filter: blur(3px);
+          }
+
+        }
+
+      }
+
+    }
+
+
+  }
+
+}

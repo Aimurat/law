@@ -1,0 +1,11 @@
+<ng-container *ngIf="data">
+  <div class="window" (click)="data = null">
+    <div class="modal" (click)="$event.stopPropagation()">
+      <div class="modal__title">Уведомление</div>
+      <div class="modal__content">{{data.message}}</div>
+      <div class="modal__buttons">
+        <div class="button" (click)="data = null">Закрыть</div>
+      </div>
+    </div>
+  </div>
+</ng-container>

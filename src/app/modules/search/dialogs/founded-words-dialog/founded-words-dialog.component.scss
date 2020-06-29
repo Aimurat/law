@@ -1,0 +1,28 @@
+.content::ng-deep {
+
+  .item {
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ecf0f1;
+
+    &:last-child {
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom-width: 0;
+    }
+
+    .counter {
+      font-size: 15px;
+      font-weight: bold;
+      margin-right: 10px;
+    }
+
+    em {
+      font-style: normal;
+      color: #088219;
+      background: rgba(255, 255, 0, 1);
+    }
+
+  }
+
+}

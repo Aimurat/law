@@ -1,0 +1,15 @@
+<div class="alerts">
+  <ng-container *ngFor="let a of array">
+    <div class="alert" [ngClass]="getClasses(a)">
+      <div class="alert__icon">
+        <ng-container *ngIf="!a.isDanger">
+          <span class="icon-check-circle"></span>
+        </ng-container>
+        <ng-container *ngIf="a.isDanger">
+          <span class="icon-slash"></span>
+        </ng-container>
+      </div>
+      <div class="alert__message">{{a.message}}</div>
+    </div>
+  </ng-container>
+</div>

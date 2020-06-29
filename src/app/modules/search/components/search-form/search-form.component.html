@@ -1,0 +1,87 @@
+<div class="workspace">
+  <div class="workspace__scrollbar" *ngIf="isLoaded">
+    <div class="card">
+      <mat-tab-group dynamicHeight [@.disabled]="true">
+        <mat-tab label="По ключевым словам">
+          <div class="form">
+            <form [formGroup]="searchKeyForm" (ngSubmit)="onSubmit()">
+              <mat-form-field>
+                <mat-label>Ключевые слова</mat-label>
+                <label>
+                  <input matInput placeholder="Введите ключевые слова" formControlName="input" required>
+                </label>
+              </mat-form-field>
+              <mat-form-field>
+                <mat-label>Язык</mat-label>
+                <mat-select formControlName="language">
+                  <mat-option [value]="selectedDefault">Выберите язык</mat-option>
+                  <mat-option *ngFor="let item of languageDict" [value]="item">{{item.name}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field>
+                <mat-label>Год</mat-label>
+                <mat-select formControlName="years">
+                  <mat-option [value]="selectedDefault">Выберите год</mat-option>
+                  <mat-option *ngFor="let item of yearsDict" [value]="item">{{item.id}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field>
+                <mat-label>Категория</mat-label>
+                <mat-select formControlName="classifications">
+                  <mat-option [value]="selectedDefault">Выберите категорию</mat-option>
+                  <mat-option *ngFor="let c of classifications$" [value]="c">{{c.name}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field>
+                <mat-label>Судебный орган</mat-label>
+                <mat-select formControlName="courts">
+                  <mat-option [value]="selectedDefault">Выберите судебный орган</mat-option>
+                  <mat-option *ngFor="let court of courts$" [value]="court">{{court.name}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field>
+                <mat-label>Область</mat-label>
+                <mat-select formControlName="regions">
+                  <mat-option [value]="selectedDefault">Выберите область</mat-option>
+                  <mat-option *ngFor="let region of regions$" [value]="region">{{region.name}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field>
+                <mat-label>ФИО судьи</mat-label>
+                <mat-select formControlName="judges">
+                  <mat-option [value]="selectedDefault">Выберите ФИО судьи</mat-option>
+                  <mat-option *ngFor="let judge of judges$" [value]="judge">{{judge.name}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field>
+                <mat-label>Результат рассмотрения</mat-label>
+                <mat-select formControlName="results">
+                  <mat-option [value]="selectedDefault">Выберите результат рассмотрения</mat-option>
+                  <mat-option *ngFor="let result of results$" [value]="result">{{result.name}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-checkbox [(ngModel)]="checkBox" [ngModelOptions]="{standalone: true}">
+                Использовать Смарт
+              </mat-checkbox>
+              <button type="submit" color="primary" mat-flat-button>Поиск</button>
+              <button (click)="onReset()" mat-stroked-button>Сбросить</button>
+            </form>
+          </div>
+        </mat-tab>
+        <mat-tab label="Интеллектуальный поиск">
+          <div class="form">
+            <form [formGroup]="searchIntellectualForm" (ngSubmit)="onSubmitIntellectual()">
+              <mat-form-field appearance="fill">
+                <mat-label>Введите описание судебного дела</mat-label>
+                <label>
+                  <textarea rows="15" formControlName="textarea" matInput required></textarea>
+                </label>
+              </mat-form-field>
+              <button type="submit" color="primary" mat-flat-button>Поиск</button>
+            </form>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </div>
+</div>
