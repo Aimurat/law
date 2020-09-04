@@ -83,7 +83,9 @@ export class SearchFormComponent implements OnInit {
           regions: this.findInResponse(this.regions$, p.regions.id),
           results: this.findInResponse(this.results$, p.results.id),
           years: this.findInResponse(this.yearsDict, p.years.id),
-          language: this.findInResponse(this.languageDict, p.language.id)
+          language: this.findInResponse(this.languageDict, p.language.id),
+          start_date: p.start_date,
+          end_date: p.end_date
         };
         this.checkBox = p.is_smart;
         this.searchKeyForm.patchValue(params);
@@ -109,7 +111,9 @@ export class SearchFormComponent implements OnInit {
       regions: [this.selectedDefault],
       results: [this.selectedDefault],
       years: [this.selectedDefault],
-      language: [this.selectedDefault]
+      language: [this.selectedDefault],
+      start_date: ['', Validators.required],
+      end_date: ['', Validators.required],
     });
 
     this.searchIntellectualForm = this.fb.group(
@@ -135,6 +139,8 @@ export class SearchFormComponent implements OnInit {
       year: this.isFilled(this.searchKeyForm.controls.years.value),
       language_id: this.isFilled(this.searchKeyForm.controls.language.value),
       text: this.searchKeyForm.controls.input.value,
+      start_date: this.searchKeyForm.controls.start_date.value,
+      end_date: this.searchKeyForm.controls.end_date.value,
       is_smart: this.checkBox
     };
 
@@ -173,7 +179,9 @@ export class SearchFormComponent implements OnInit {
       regions: this.selectedDefault,
       results: this.selectedDefault,
       years: this.selectedDefault,
-      language: this.selectedDefault
+      language: this.selectedDefault,
+      start_date: '',
+      end_date: ''
     };
     this.checkBox = false;
     this.searchKeyForm.patchValue(params);

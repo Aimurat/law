@@ -5,10 +5,9 @@
         <div class="title"><strong>Категории:</strong></div>
         <div class="categories">
           <div class="category" *ngFor="let cat of categories"
-               (click)="getActs(cat)"
                [ngClass]="cat.isActive ? 'active' : ''">
             <div class="category__probability">
-              <div>{{cat.probability * 100}}%</div>
+              <div>{{cat.probability}}%</div>
             </div>
             <div class="category__name">{{cat.name}}</div>
           </div>
@@ -35,7 +34,7 @@
           </div>
         </ng-container>
       </div>
-      <div class="card margin-bottom">
+      <div class="card margin-bottom" *ngIf="actGroupsAnomaly.length > 0">
         <div class="title"><strong>Аномалии:</strong></div>
         <div class="cards">
           <div class="cards__scrollbar">

@@ -92,6 +92,9 @@
       </div>
     </div>
     <div class="content">
+      <div class="card margin-bottom">
+        <button mat-raised-button color="primary" (click)="dePersonalize()">Деперсонализация данных</button>
+      </div>
       <div class="card">
         <div class="html" [innerHTML]="act?.depersonalized_text"></div>
       </div>

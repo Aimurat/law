@@ -13,7 +13,7 @@ import {ApiService} from '../../../../shared/services/api.service';
 export class ISearchResultComponent implements OnInit {
 
   public actGroups;
-  public actGroupsAnomaly;
+  public actGroupsAnomaly = [];
 
   public category: Category = null;
   public categories: Category[] = [];
@@ -52,7 +52,7 @@ export class ISearchResultComponent implements OnInit {
       }
       if (this.categories.length > 1) {
         this.category = this.categories[0];
-        this.getActs(this.categories[0]);
+        //this.getActs(this.categories[0]);
         this.loadResultPredict();
       }
     });

@@ -5,9 +5,9 @@ import {SearchRoutingModule} from './search-routing.module';
 import {SearchFormComponent} from './components/search-form/search-form.component';
 import {
   MatButtonModule,
-  MatCheckboxModule, MatDialogModule,
+  MatCheckboxModule, MatDatepickerModule, MatDialogModule,
   MatFormFieldModule, MatIconModule,
-  MatInputModule, MatListModule, MatProgressBarModule,
+  MatInputModule, MatListModule, MatNativeDateModule, MatProgressBarModule,
   MatRippleModule,
   MatSelectModule, MatSortModule, MatTableModule,
   MatTabsModule
@@ -46,7 +46,9 @@ import { SafeHtmlPipe } from './pipes/safe-html.pipe';
     MatDialogModule,
     MatListModule,
     MatIconModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   entryComponents: [
     FoundedWordsDialogComponent

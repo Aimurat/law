@@ -60,6 +60,18 @@
                   <mat-option *ngFor="let result of results$" [value]="result">{{result.name}}</mat-option>
                 </mat-select>
               </mat-form-field>
+              <mat-form-field>
+                <mat-label>Дата начала</mat-label>
+                <input matInput [matDatepicker]="picker" formControlName="start_date">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+              <mat-form-field>
+                <mat-label>Дата завершения</mat-label>
+                <input matInput [matDatepicker]="picker2" formControlName="end_date">
+                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                <mat-datepicker #picker2></mat-datepicker>
+              </mat-form-field>
               <mat-checkbox [(ngModel)]="checkBox" [ngModelOptions]="{standalone: true}">
                 Использовать Смарт
               </mat-checkbox>

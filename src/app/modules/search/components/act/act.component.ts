@@ -130,4 +130,10 @@ export class ActComponent implements OnInit {
     }
   }
 
+  dePersonalize() {
+    this.dataService.dePersonalize(this.instance, this.act.id).subscribe(response => {
+      this.act.depersonalized_text = response['text'];
+    });
+  }
+
 }

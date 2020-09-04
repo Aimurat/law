@@ -104,4 +104,8 @@ export class DataService {
     return this.http.post(this.api.API_URL + '/api/main/predict/classifications/', text);
   }
 
+  dePersonalize(type: string, id: number) {
+    return this.http.get(this.api.API_URL + `/api/main/${type}/${id}/personalize/`);
+  }
+
 }
