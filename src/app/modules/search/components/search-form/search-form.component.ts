@@ -4,6 +4,8 @@ import {Item} from '../../models/models';
 import {forkJoin, Observable} from 'rxjs';
 import {DataService} from '../../services/data.service';
 import {Router} from '@angular/router';
+import * as moment from 'moment';
+import {map, startWith} from 'rxjs/operators';
 
 @Component({
   selector: 'app-search-form',
@@ -25,9 +27,16 @@ export class SearchFormComponent implements OnInit {
   public yearsDict: Item[] = [
     {id: 2016, name: ''},
     {id: 2017, name: ''},
-    {id: 2018, name: ''},
-    {id: 2019, name: ''},
+    {id: 2018, name: ''}
   ];
+
+  public textTypes = [
+    {id: 1, key: 'text', name: 'Отдельно по словам'},
+    {id: 2, key: 'text_phrase', name: 'Строго по последовательности'},
+    {id: 3, key: 'stemed_text_phrase', name: 'По корням и по последовательности'}
+  ];
+
+  public synonyms: string[] = [];
 
   public checkBox = false;
 
@@ -72,11 +81,24 @@ export class SearchFormComponent implements OnInit {
       this.regions$ = response[3];
       this.results$ = response[4];
 
+      this.courts = this.searchKeyForm.controls['courts'].valueChanges
+        .pipe(
+          startWith(''),
+          map(value => this._filter(this.courts$, value))
+        );
+
+      this.judges = this.searchKeyForm.controls['judges'].valueChanges
+        .pipe(
+          startWith(''),
+          map(value => this._filter(this.judges$, value))
+        );
+
       const local = localStorage.getItem('searchKeywords');
       if (local) {
         const p = JSON.parse(local);
         const params = {
           input: p.input,
+          textType: this.findInResponse(this.textTypes, p.textType.id),
           classifications: this.findInResponse(this.classifications$, p.classifications.id),
           courts: this.findInResponse(this.courts$, p.courts.id),
           judges: this.findInResponse(this.judges$, p.judges.id),
@@ -96,6 +118,19 @@ export class SearchFormComponent implements OnInit {
     });
   }
 
+  displayFn(item: Item): string {
+    return item && item.name ? item.name : '';
+  }
+
+  private _filter(data: Item[], value: string): Item[] {
+    if (typeof value == 'string') {
+      const filterValue = value.toLowerCase();
+      return data.filter(d => d.name.toLowerCase().includes(filterValue));
+    } else {
+      return data;
+    }
+  }
+
   findInResponse(data, id) {
     const item = data.find(r => r.id === id);
     return item ? item : this.selectedDefault;
@@ -104,6 +139,7 @@ export class SearchFormComponent implements OnInit {
   createForm() {
 
     this.searchKeyForm = this.fb.group({
+      textType: ['', Validators.required],
       input: ['', Validators.required],
       classifications: [this.selectedDefault],
       courts: [this.selectedDefault],
@@ -112,13 +148,15 @@ export class SearchFormComponent implements OnInit {
       results: [this.selectedDefault],
       years: [this.selectedDefault],
       language: [this.selectedDefault],
-      start_date: ['', Validators.required],
-      end_date: ['', Validators.required],
+      start_date: [''],
+      end_date: [''],
     });
 
     this.searchIntellectualForm = this.fb.group(
       {
-        textarea: ['', Validators.required]
+        textarea: ['', Validators.required],
+        start_date: [''],
+        end_date: ['']
       }
     );
 
@@ -130,6 +168,14 @@ export class SearchFormComponent implements OnInit {
       return;
     }
 
+    let startdate, enddate;
+    if (this.searchKeyForm.controls.start_date.value) {
+      startdate = moment(this.searchKeyForm.controls.start_date.value).format('YYYY-MM-DD');
+    }
+    if (this.searchKeyForm.controls.end_date.value) {
+      enddate = moment(this.searchKeyForm.controls.end_date.value).format('YYYY-MM-DD');
+    }
+
     const obj = {
       region_id: this.isFilled(this.searchKeyForm.controls.regions.value),
       court_id: this.isFilled(this.searchKeyForm.controls.courts.value),
@@ -138,16 +184,19 @@ export class SearchFormComponent implements OnInit {
       judge_id: this.isFilled(this.searchKeyForm.controls.judges.value),
       year: this.isFilled(this.searchKeyForm.controls.years.value),
       language_id: this.isFilled(this.searchKeyForm.controls.language.value),
-      text: this.searchKeyForm.controls.input.value,
-      start_date: this.searchKeyForm.controls.start_date.value,
-      end_date: this.searchKeyForm.controls.end_date.value,
+      start_date: startdate,
+      end_date: enddate,
       is_smart: this.checkBox
     };
+
+    let textType = this.searchKeyForm.controls['textType'].value;
+    obj[textType['key']] = this.searchKeyForm.controls.input.value;
 
     this.dataService.postKeywords(obj, this.searchKeyForm.value).subscribe(data => {
       this.dataService.saveResponse(data);
       return this.router.navigate(['/result']);
     });
+
   }
 
   onSubmitIntellectual() {
@@ -155,24 +204,36 @@ export class SearchFormComponent implements OnInit {
       this.isValidText = false;
       return;
     }
+
+    let startdate, enddate;
+    if (this.searchKeyForm.controls.start_date.value) {
+      startdate = moment(this.searchIntellectualForm.controls.start_date.value).format('YYYY-MM-DD');
+    }
+    if (this.searchKeyForm.controls.end_date.value) {
+      enddate = moment(this.searchIntellectualForm.controls.end_date.value).format('YYYY-MM-DD');
+    }
+
     this.dataService.postIntellectual({
-      text: this.searchIntellectualForm.controls.textarea.value
+      text: this.searchIntellectualForm.controls.textarea.value,
+      start_date: startdate,
+      end_date: enddate
     }).subscribe(data => {
       this.dataService.saveIntellectualResponse(data);
       return this.router.navigate(['/i-result']);
     });
   }
 
-  isFilled(value: Item) {
+  isFilled = (value: Item) => {
     if (value.id > 0) {
       return value.id;
     }
     return;
-  }
+  };
 
   onReset() {
     const params = {
       input: '',
+      textType: null,
       classifications: this.selectedDefault,
       courts: this.selectedDefault,
       judges: this.selectedDefault,
@@ -185,6 +246,14 @@ export class SearchFormComponent implements OnInit {
     };
     this.checkBox = false;
     this.searchKeyForm.patchValue(params);
+  }
+
+  changeCB() {
+    if (this.checkBox && this.searchKeyForm.controls.input.value != '') {
+      this.dataService.getSynonyms(this.searchKeyForm.controls.input.value).subscribe(response => {
+        this.synonyms = response.synonyms.split(' ');
+      });
+    }
   }
 
 }

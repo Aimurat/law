@@ -5,7 +5,7 @@
         <div class="title"><strong>Категории:</strong></div>
         <div class="categories">
           <div class="category" *ngFor="let cat of categories"
-               [ngClass]="cat.isActive ? 'active' : ''">
+               [ngClass]="cat.isActive ? 'active' : ''" (click)="getActs(cat)">
             <div class="category__probability">
               <div>{{cat.probability}}%</div>
             </div>
@@ -15,27 +15,45 @@
       </div>
     </div>
     <div class="content">
-      <div class="card margin-bottom">
-        <div class="title"><strong>Список вероятных исходов по Вашему запросу:</strong></div>
-        <ng-container *ngFor="let p of predicts">
-          <div class="progress">
-            <div class="progress__icon">
-              <img alt="" [src]="getIcon(p.class_icon)"/>
+      <div class="block margin-bottom">
+        <div class="card flex-0">
+          <div class="title"><strong>Интеллектуальный прогноз исхода дела<br/>(по всей базе ВС):</strong></div>
+          <div class="predict" *ngIf="predict">
+            <div class="predict__percent">
+              {{predict.proba}}<span>%</span>
             </div>
-            <div class="progress__data">
-              <div>{{p.class}}</div>
-            </div>
-            <div class="progress__bar">
-              <div class="progressbar">
-                <span>{{p.proba}}%</span>
-                <div class="progressbar__value" [ngStyle]="{width: p.proba + '%'}"></div>
+            <div class="predict__result">
+              <div class="predict__result__icon">
+                <img [src]="getIcon(predict.class_icon)">
+              </div>
+              <div class="predict__result__name">
+                {{predict.class}}
               </div>
             </div>
           </div>
-        </ng-container>
+        </div>
+        <div class="card">
+          <div class="title"><strong>Статистика результатов по схожим делам:</strong></div>
+          <ng-container *ngFor="let p of predicts">
+            <div class="progress">
+              <div class="progress__icon">
+                <img alt="" [src]="getIcon(p.result.icon)"/>
+              </div>
+              <div class="progress__data">
+                <div>{{p.result.name}}</div>
+              </div>
+              <div class="progress__bar">
+                <div class="progressbar">
+                  <span>{{p.percent}}%  ({{p.count}})</span>
+                  <div class="progressbar__value" [ngStyle]="{width: p.percent + '%'}"></div>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </div>
       </div>
       <div class="card margin-bottom" *ngIf="actGroupsAnomaly.length > 0">
-        <div class="title"><strong>Аномалии:</strong></div>
+        <div class="title"><strong>Аномалии:</strong> {{stats.anomalies}} ({{stats.anomalies_pct}}%)</div>
         <div class="cards">
           <div class="cards__scrollbar">
             <ng-container *ngFor="let a of actGroupsAnomaly">
@@ -48,24 +66,24 @@
                     <span class="icon-download"></span>
                   </div>
                 </div>
-                <div class="number">{{a['act']['act_number']}}</div>
+                <div class="number">{{a['act_number']}}</div>
                 <div class="date">
                   <span class="icon-calendar"></span>
-                  {{a['act']['registration_date'] | date: 'dd.MM.yyyy'}}
+                  {{a['registration_date'] | date: 'dd.MM.yyyy'}}
                 </div>
                 <div class="court">
                   <span class="icon-home"></span>
-                  <ng-container *ngIf="a['act']['court']">
-                    {{a['act']['court']['name']}}
+                  <ng-container *ngIf="a['court']">
+                    {{a['court']['name']}}
                   </ng-container>
                 </div>
                 <div class="result">
                   <span class="icon-folder"></span>
-                  {{a['act']['result']['name']}}
+                  {{a['result']['name']}}
                 </div>
                 <div class="classification">
-                  <div class="claimant"><span class="icon-user"></span> {{capitalize(a['act']['claimant'])}}</div>
-                  <div class="defendant"><span class="icon-user"></span> {{capitalize(a['act']['defendant'])}}</div>
+                  <div class="claimant"><span class="icon-user"></span> {{capitalize(a['claimant'])}}</div>
+                  <div class="defendant"><span class="icon-user"></span> {{capitalize(a['defendant'])}}</div>
                 </div>
               </div>
             </ng-container>
@@ -73,22 +91,23 @@
         </div>
       </div>
       <div class="card">
+        <div class="title"><strong>Не аномалии:</strong> {{stats.not_anomalies}} ({{stats.not_anomalies_pct}}%)</div>
         <table mat-table [dataSource]="actGroups">
           <ng-container matColumnDef="act_number">
             <th width="15%" mat-header-cell *matHeaderCellDef>Номер дела</th>
             <td mat-cell *matCellDef="let element">
-              <div>{{element['act']['act_number']}}</div>
+              <div>{{element['act_number']}}</div>
               <div class="date">
                 <span class="icon-calendar"></span>
-                {{element['act']['registration_date'] | date: 'dd.MM.yyyy'}}
+                {{element['registration_date'] | date: 'dd.MM.yyyy'}}
               </div>
             </td>
           </ng-container>
           <ng-container matColumnDef="claimant">
             <th mat-header-cell *matHeaderCellDef>Стороны процесса</th>
             <td mat-cell *matCellDef="let element">
-              <div class="claimant"><span class="icon-user"></span> {{capitalize(element['act']['claimant'])}}</div>
-              <div class="defendant"><span class="icon-user"></span> {{capitalize(element['act']['defendant'])}}
+              <div class="claimant"><span class="icon-user"></span> {{capitalize(element['claimant'])}}</div>
+              <div class="defendant"><span class="icon-user"></span> {{capitalize(element['defendant'])}}
               </div>
             </td>
           </ng-container>
@@ -97,12 +116,12 @@
             <td mat-cell *matCellDef="let element">
               <div>
                 <span class="icon-home"></span>
-                <ng-container *ngIf="element['act']['court']">
-                  {{element['act']['court']['name']}}
+                <ng-container *ngIf="element['court']">
+                  {{element['court']['name']}}
                 </ng-container>
               </div>
-              <div><span class="icon-folder"></span> {{element['act']['result']['name']}}</div>
-              <div class="gray">{{element['act']['classification']['name']}}</div>
+              <div><span class="icon-folder"></span> {{element['result']['name']}}</div>
+              <div class="gray">{{element['classification']['name']}}</div>
             </td>
           </ng-container>
           <ng-container matColumnDef="tools">

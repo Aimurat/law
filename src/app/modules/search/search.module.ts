@@ -4,6 +4,7 @@ import {CommonModule} from '@angular/common';
 import {SearchRoutingModule} from './search-routing.module';
 import {SearchFormComponent} from './components/search-form/search-form.component';
 import {
+  MatAutocompleteModule,
   MatButtonModule,
   MatCheckboxModule, MatDatepickerModule, MatDialogModule,
   MatFormFieldModule, MatIconModule,
@@ -48,7 +49,8 @@ import { SafeHtmlPipe } from './pipes/safe-html.pipe';
     MatIconModule,
     MatProgressBarModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatAutocompleteModule
   ],
   entryComponents: [
     FoundedWordsDialogComponent

@@ -6,6 +6,12 @@
           <div class="form">
             <form [formGroup]="searchKeyForm" (ngSubmit)="onSubmit()">
               <mat-form-field>
+                <mat-label>Тип поиска *</mat-label>
+                <mat-select formControlName="textType">
+                  <mat-option *ngFor="let type of textTypes" [value]="type">{{type.name}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field>
                 <mat-label>Ключевые слова</mat-label>
                 <label>
                   <input matInput placeholder="Введите ключевые слова" formControlName="input" required>
@@ -33,26 +39,26 @@
                 </mat-select>
               </mat-form-field>
               <mat-form-field>
-                <mat-label>Судебный орган</mat-label>
-                <mat-select formControlName="courts">
+                <mat-label>Выберите судебный орган</mat-label>
+                <input type="text" placeholder="Выберите судебный орган" aria-label="Number" matInput
+                       formControlName="courts"
+                       [matAutocomplete]="auto">
+                <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
                   <mat-option [value]="selectedDefault">Выберите судебный орган</mat-option>
-                  <mat-option *ngFor="let court of courts$" [value]="court">{{court.name}}</mat-option>
-                </mat-select>
+                  <mat-option *ngFor="let court of courts | async" [value]="court">{{court.name}}</mat-option>
+                </mat-autocomplete>
               </mat-form-field>
               <mat-form-field>
-                <mat-label>Область</mat-label>
-                <mat-select formControlName="regions">
-                  <mat-option [value]="selectedDefault">Выберите область</mat-option>
-                  <mat-option *ngFor="let region of regions$" [value]="region">{{region.name}}</mat-option>
-                </mat-select>
-              </mat-form-field>
-              <mat-form-field>
-                <mat-label>ФИО судьи</mat-label>
-                <mat-select formControlName="judges">
+                <mat-label>Выберите судью</mat-label>
+                <input type="text" placeholder="Выберите судью" aria-label="Number" matInput
+                       formControlName="judges"
+                       [matAutocomplete]="auto1">
+                <mat-autocomplete #auto1="matAutocomplete" [displayWith]="displayFn">
                   <mat-option [value]="selectedDefault">Выберите ФИО судьи</mat-option>
-                  <mat-option *ngFor="let judge of judges$" [value]="judge">{{judge.name}}</mat-option>
-                </mat-select>
+                  <mat-option *ngFor="let judge of judges | async" [value]="judge">{{judge.name}}</mat-option>
+                </mat-autocomplete>
               </mat-form-field>
+
               <mat-form-field>
                 <mat-label>Результат рассмотрения</mat-label>
                 <mat-select formControlName="results">
@@ -60,6 +66,7 @@
                   <mat-option *ngFor="let result of results$" [value]="result">{{result.name}}</mat-option>
                 </mat-select>
               </mat-form-field>
+
               <mat-form-field>
                 <mat-label>Дата начала</mat-label>
                 <input matInput [matDatepicker]="picker" formControlName="start_date">
@@ -72,9 +79,13 @@
                 <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                 <mat-datepicker #picker2></mat-datepicker>
               </mat-form-field>
-              <mat-checkbox [(ngModel)]="checkBox" [ngModelOptions]="{standalone: true}">
-                Использовать Смарт
+              <mat-checkbox [(ngModel)]="checkBox" [ngModelOptions]="{standalone: true}" (change)="changeCB()">
+                Поиск по синонимам
               </mat-checkbox>
+              <div *ngIf="synonyms.length > 0" style="margin: 15px 0">
+                <h3>Поиск так же будет проводиться по следующим словам:</h3>
+                <div *ngFor="let s of synonyms; let i = index;">{{i+1}}. {{s}}</div>
+              </div>
               <button type="submit" color="primary" mat-flat-button>Поиск</button>
               <button (click)="onReset()" mat-stroked-button>Сбросить</button>
             </form>
@@ -88,6 +99,18 @@
                 <label>
                   <textarea rows="15" formControlName="textarea" matInput required></textarea>
                 </label>
+              </mat-form-field>
+              <mat-form-field>
+                <mat-label>Дата начала</mat-label>
+                <input matInput [matDatepicker]="picker3" formControlName="start_date">
+                <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                <mat-datepicker #picker3></mat-datepicker>
+              </mat-form-field>
+              <mat-form-field>
+                <mat-label>Дата завершения</mat-label>
+                <input matInput [matDatepicker]="picker4" formControlName="end_date">
+                <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
+                <mat-datepicker #picker4></mat-datepicker>
               </mat-form-field>
               <button type="submit" color="primary" mat-flat-button>Поиск</button>
             </form>

@@ -26,6 +26,7 @@ export interface Act {
   legends: Result[];
   depersonalized_text: string;
   text: string;
+  anomaly: number;
 }
 
 export interface Instance {
@@ -72,4 +73,25 @@ export interface ActGroup {
   distance: number;
   act: Act;
   anomaly: number;
+}
+
+export interface IResult {
+  counts: {
+    vertical_anomaly_count: number;
+    horizontal_anomaly_count: number;
+    red_anomaly_count: number;
+  };
+  results: IResultRes[];
+  acts: Act[]
+}
+
+export interface IResultRes {
+  count: number;
+  percent: number;
+  result: {
+    id: number;
+    code: string;
+    name: string;
+    icon: string;
+  }
 }

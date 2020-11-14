@@ -12,6 +12,7 @@ export class ActComponent implements OnInit {
 
   public act: Act;
   public isLoaded: boolean;
+  public dLoaded: boolean;
   public instance: string;
 
 
@@ -36,7 +37,7 @@ export class ActComponent implements OnInit {
     this.dataService.getAct(id, instance).subscribe(response => {
       if (response) {
         this.act = response;
-        this.act.depersonalized_text = this.act.depersonalized_text.replace(/(?:\r\n|\r|\n)/g, '<br>');;
+        this.act.depersonalized_text = this.act.depersonalized_text.replace(/(?:\r\n|\r|\n)/g, '<br>');
         this.isLoaded = true;
       }
     });
@@ -132,7 +133,7 @@ export class ActComponent implements OnInit {
 
   dePersonalize() {
     this.dataService.dePersonalize(this.instance, this.act.id).subscribe(response => {
-      this.act.depersonalized_text = response['text'];
+      this.act.depersonalized_text = response['text'].replace(/(?:\r\n|\r|\n)/g, '<br>');
     });
   }
 

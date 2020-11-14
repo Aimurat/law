@@ -51,8 +51,9 @@
 
             &.active {
               background: #ecf0f1;
+
               .category__probability {
-                >div {
+                > div {
                   background: #d63031;
                 }
               }
@@ -67,7 +68,7 @@
               color: #ffffff;
               margin-right: 10px;
 
-              >div {
+              > div {
                 width: 35px;
                 height: 35px;
                 background: #1b559f;
@@ -89,16 +90,33 @@
     .content::ng-deep {
       flex: 1;
 
+      .block {
+        display: flex;
+
+        &.margin-bottom {
+          margin-bottom: 10px;
+        }
+
+        .card {
+          margin-right: 10px;
+
+          &:last-child {
+            margin-right: 0;
+          }
+
+        }
+
+      }
+
       .card {
         flex: 1;
         background: white;
         box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         padding: 15px;
         box-sizing: border-box;
+        position: relative;
+        z-index: 999;
 
-        &.margin-bottom {
-          margin-bottom: 10px;
-        }
 
         .cards {
           position: relative;
@@ -129,6 +147,7 @@
               &.warning {
                 background: #f6e58d;
               }
+
               &.danger {
                 background: #ff7979;
               }
@@ -177,6 +196,7 @@
             justify-content: center;
             border: 2px solid #3f51b5;
             margin-right: 15px;
+
             img {
               max-width: 15px;
               height: 25px;
@@ -184,9 +204,10 @@
           }
 
           &__data {
-            width: 400px;
+            width: 270px;
             line-height: 1.2;
-            >div {
+
+            > div {
               display: flex;
               justify-content: space-between;
             }
@@ -207,7 +228,7 @@
               box-sizing: border-box;
               background: #c5cae9;
 
-              >span {
+              > span {
                 color: #ffffff;
                 position: relative;
                 z-index: 999;
@@ -231,6 +252,7 @@
 
           tr.mat-header-row {
             height: auto !important;
+
             th {
               padding: 5px 10px !important;
               font-size: 14px !important;
@@ -307,4 +329,64 @@
 
   }
 
+}
+
+
+.body {
+
+  .stat {
+    margin-bottom: 10px;
+  }
+
+  .label {
+    font-weight: bold;
+  }
+
+  .under {
+    margin-left: 15px;
+  }
+
+}
+
+
+.predict {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  &__percent {
+    font-size: 48px;
+    color: #0e6dab;
+    margin-bottom: 10px;
+
+    span {
+      font-size: 26px;
+      color: #777777;
+    }
+  }
+
+  &__result {
+    display: flex;
+    align-items: center;
+
+    &__icon {
+      margin-right: 10px;
+
+      img {
+        height: 20px;
+      }
+    }
+
+    &__name {
+      font-size: 16px;
+      color: #333333;
+    }
+  }
+
+}
+
+.flex-0 {
+  flex: none !important;
+  flex-shrink: 0;
 }

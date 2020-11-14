@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {ApiService} from '../../../shared/services/api.service';
-import {Act, ActGroup, Category, Item, Predict} from '../models/models';
+import {Act, ActGroup, Category, IResult, Item, Predict} from '../models/models';
 import {map} from 'rxjs/operators';
 
 @Injectable({
@@ -47,15 +47,19 @@ export class DataService {
   getActs(category: Category) {
     return this.http.post(this.api.API_URL + '/api/main/smart/similar/', {
       text: localStorage.getItem('text'),
-      classification: category.code
-    }).pipe(map(data => data as Act[]));
+      classification: category.code,
+      start_date: localStorage.getItem('start_date'),
+      end_date: localStorage.getItem('end_date')
+    }).pipe(map(data => data as IResult));
   }
 
-  searchActs() {
-    return this.http.post(this.api.API_URL + '/api/main/outliers/search/', {
-      text: localStorage.getItem('text')
-    }).pipe(map(data => data as ActGroup[]));
-  }
+  // searchActs() {
+  //   return this.http.post(this.api.API_URL + '/api/main/outliers/search/', {
+  //     text: localStorage.getItem('text'),
+  //     start_date: localStorage.getItem('start_date'),
+  //     end_date: localStorage.getItem('end_date')
+  //   }).pipe(map(data => data as ActGroup[]));
+  // }
 
   getResultPredict(classification: string) {
     return this.http.post(this.api.API_URL + '/api/main/result_predict/', {
@@ -101,11 +105,19 @@ export class DataService {
 
   postIntellectual(text: any) {
     localStorage.setItem('text', text.text);
+    localStorage.setItem('start_date', text.start_date);
+    localStorage.setItem('end_date', text.end_date);
     return this.http.post(this.api.API_URL + '/api/main/predict/classifications/', text);
   }
 
   dePersonalize(type: string, id: number) {
     return this.http.get(this.api.API_URL + `/api/main/${type}/${id}/personalize/`);
+  }
+
+  getSynonyms(text: string) {
+    return this.http.post(this.api.API_URL + '/api/main/w2v/similar/', {
+      text: text
+    }).pipe(map(response => response as { synonyms: string }));
   }
 
 }
