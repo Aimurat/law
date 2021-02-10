@@ -19,6 +19,11 @@
         <div class="header__navigation__item__name">Результаты поиска</div>
       </div>
     </ng-container>
+    <ng-container *ngIf="isIResult">
+      <div class="header__navigation__item" [routerLink]="['/i-result']" [routerLinkActive]="'active'">
+        <div class="header__navigation__item__name">Результаты поиска</div>
+      </div>
+    </ng-container>
     <ng-container *ngIf="isAct">
       <div class="header__navigation__item active">
         <div class="header__navigation__item__name">Дело</div>

@@ -19,6 +19,8 @@ import { FoundedWordsDialogComponent } from './dialogs/founded-words-dialog/foun
 import { ActComponent } from './components/act/act.component';
 import { ISearchResultComponent } from './components/i-search-result/i-search-result.component';
 import { SafeHtmlPipe } from './pipes/safe-html.pipe';
+import { SynonymsDialogComponent } from './dialogs/synonyms-dialog/synonyms-dialog.component';
+import { ActsDialogComponent } from './dialogs/acts-dialog/acts-dialog.component';
 
 
 @NgModule({
@@ -28,7 +30,9 @@ import { SafeHtmlPipe } from './pipes/safe-html.pipe';
     FoundedWordsDialogComponent,
     ActComponent,
     ISearchResultComponent,
-    SafeHtmlPipe
+    SafeHtmlPipe,
+    SynonymsDialogComponent,
+    ActsDialogComponent
   ],
   imports: [
     CommonModule,
@@ -53,7 +57,9 @@ import { SafeHtmlPipe } from './pipes/safe-html.pipe';
     MatAutocompleteModule
   ],
   entryComponents: [
-    FoundedWordsDialogComponent
+    FoundedWordsDialogComponent,
+    SynonymsDialogComponent,
+    ActsDialogComponent
   ]
 })
 export class SearchModule {

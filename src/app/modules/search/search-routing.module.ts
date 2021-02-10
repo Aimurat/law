@@ -14,6 +14,7 @@ const routes: Routes = [
       {path: 'result', component: SearchResultComponent},
       {path: 'i-result', component: ISearchResultComponent},
       {path: 'act/:id/:instance', component: ActComponent},
+      {path: 'i-act/:id/:instance', component: ActComponent},
     ]
   }
 ];

@@ -1,0 +1,74 @@
+table {
+  width: 100%;
+
+  tr.mat-header-row {
+    height: auto !important;
+
+    th {
+      padding: 5px 10px !important;
+      font-size: 14px !important;
+    }
+  }
+
+  tr {
+    td {
+      padding: 5px 10px !important;
+    }
+  }
+
+}
+
+.gray {
+  color: #7f8fa6;
+  font-size: 12px;
+}
+
+.date {
+  color: #2980b9;
+  font-size: 12px;
+
+  > span {
+    margin-right: 4px;
+  }
+
+}
+
+.claimant {
+  color: #34495e;
+
+  > span {
+    margin-right: 4px;
+  }
+}
+
+.defendant {
+  color: #2c3e50;
+
+  > span {
+    margin-right: 4px;
+  }
+}
+
+.buttons {
+  display: flex;
+  justify-content: flex-end;
+
+  .btn {
+    margin-right: 5px;
+    background: #34495e;
+    color: #ffffff;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 50%;
+
+    &:last-child {
+      margin-right: 0;
+    }
+
+  }
+
+}

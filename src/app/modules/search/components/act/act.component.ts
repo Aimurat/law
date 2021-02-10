@@ -14,6 +14,7 @@ export class ActComponent implements OnInit {
   public isLoaded: boolean;
   public dLoaded: boolean;
   public instance: string;
+  public url = '';
 
 
   constructor(
@@ -24,6 +25,14 @@ export class ActComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.router.events.subscribe(r => {
+      if (this.router.url.includes('/act')) {
+        this.url = 'act';
+      }
+      if (this.router.url.includes('/i-act')) {
+        this.url = 'i-act';
+      }
+    });
     this.route.params.subscribe(params => {
       if (params.id && params.instance) {
         this.instance = params.instance;
@@ -126,7 +135,7 @@ export class ActComponent implements OnInit {
     if (this.act.hasOwnProperty(instance)) {
       if (this.act[instance] != null) {
         const ins = instance + 's';
-        this.router.navigate(['/act', this.act[instance].id, ins]);
+        this.router.navigate(['/' + this.url, this.act[instance].id, ins]);
       }
     }
   }

@@ -144,12 +144,44 @@
                 right: 10px;
               }
 
-              &.warning {
-                background: #f6e58d;
+              &.yellow {
+                background: #f1c40f;
               }
 
-              &.danger {
-                background: #ff7979;
+              &.red {
+                background: #e74c3c;
+                color: #ffffff;
+
+                .date {
+                  color: #ffffff !important;
+                  font-size: 12px;
+
+                  > span {
+                    margin-right: 4px;
+                  }
+
+                }
+
+                .claimant {
+                  color: #ffffff !important;
+
+                  > span {
+                    margin-right: 4px;
+                  }
+                }
+
+                .defendant {
+                  color: #ffffff !important;
+
+                  > span {
+                    margin-right: 4px;
+                  }
+                }
+
+              }
+
+              &.orange {
+                background: #e67e22;
               }
 
               .date {
@@ -374,6 +406,7 @@
       margin-right: 10px;
 
       img {
+        max-width: 25px;
         height: 20px;
       }
     }

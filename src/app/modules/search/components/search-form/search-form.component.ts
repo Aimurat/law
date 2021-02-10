@@ -6,6 +6,8 @@ import {DataService} from '../../services/data.service';
 import {Router} from '@angular/router';
 import * as moment from 'moment';
 import {map, startWith} from 'rxjs/operators';
+import {MatDialog} from '@angular/material';
+import {SynonymsDialogComponent} from '../../dialogs/synonyms-dialog/synonyms-dialog.component';
 
 @Component({
   selector: 'app-search-form',
@@ -31,9 +33,9 @@ export class SearchFormComponent implements OnInit {
   ];
 
   public textTypes = [
-    {id: 1, key: 'text', name: 'Отдельно по словам'},
     {id: 2, key: 'text_phrase', name: 'Строго по последовательности'},
-    {id: 3, key: 'stemed_text_phrase', name: 'По корням и по последовательности'}
+    {id: 3, key: 'stemed_text_phrase', name: 'По корням и по последовательности'},
+    {id: 1, key: 'text', name: 'Отдельно по словам'},
   ];
 
   public synonyms: string[] = [];
@@ -60,11 +62,13 @@ export class SearchFormComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private dataService: DataService,
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog
   ) {
   }
 
   ngOnInit() {
+
     forkJoin(
       this.courts = this.dataService.getCourts(),
       this.classifications = this.dataService.getClassifications(),
@@ -81,6 +85,12 @@ export class SearchFormComponent implements OnInit {
       this.regions$ = response[3];
       this.results$ = response[4];
 
+      this.classifications = this.searchKeyForm.controls['classifications'].valueChanges
+        .pipe(
+          startWith(''),
+          map(value => this._filter(this.classifications$, value))
+        );
+
       this.courts = this.searchKeyForm.controls['courts'].valueChanges
         .pipe(
           startWith(''),
@@ -91,6 +101,12 @@ export class SearchFormComponent implements OnInit {
         .pipe(
           startWith(''),
           map(value => this._filter(this.judges$, value))
+        );
+
+      this.results = this.searchKeyForm.controls['results'].valueChanges
+        .pipe(
+          startWith(''),
+          map(value => this._filter(this.results$, value))
         );
 
       const local = localStorage.getItem('searchKeywords');
@@ -176,6 +192,10 @@ export class SearchFormComponent implements OnInit {
       enddate = moment(this.searchKeyForm.controls.end_date.value).format('YYYY-MM-DD');
     }
 
+    if (this.searchKeyForm.controls['textType'].value.id != 1) {
+      this.checkBox = false;
+    }
+
     const obj = {
       region_id: this.isFilled(this.searchKeyForm.controls.regions.value),
       court_id: this.isFilled(this.searchKeyForm.controls.courts.value),
@@ -248,10 +268,16 @@ export class SearchFormComponent implements OnInit {
     this.searchKeyForm.patchValue(params);
   }
 
-  changeCB() {
+  openCB() {
     if (this.checkBox && this.searchKeyForm.controls.input.value != '') {
       this.dataService.getSynonyms(this.searchKeyForm.controls.input.value).subscribe(response => {
-        this.synonyms = response.synonyms.split(' ');
+        this.dialog.open(SynonymsDialogComponent, {
+          autoFocus: false,
+          width: '800px',
+          data: {
+            words: response.synonyms.split(' ')
+          }
+        });
       });
     }
   }

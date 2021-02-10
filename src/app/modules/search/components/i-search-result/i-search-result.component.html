@@ -16,24 +16,24 @@
     </div>
     <div class="content">
       <div class="block margin-bottom">
-        <div class="card flex-0">
-          <div class="title"><strong>Интеллектуальный прогноз исхода дела<br/>(по всей базе ВС):</strong></div>
-          <div class="predict" *ngIf="predict">
-            <div class="predict__percent">
-              {{predict.proba}}<span>%</span>
-            </div>
-            <div class="predict__result">
-              <div class="predict__result__icon">
-                <img [src]="getIcon(predict.class_icon)">
-              </div>
-              <div class="predict__result__name">
-                {{predict.class}}
-              </div>
-            </div>
-          </div>
-        </div>
+<!--        <div class="card flex-0">-->
+<!--          <div class="title"><strong>Интеллектуальный прогноз исхода дела<br/>(по всей базе ВС):</strong></div>-->
+<!--          <div class="predict" *ngIf="predict">-->
+<!--            <div class="predict__percent">-->
+<!--              {{predict.proba}}<span>%</span>-->
+<!--            </div>-->
+<!--            <div class="predict__result">-->
+<!--              <div class="predict__result__icon">-->
+<!--                <img [src]="getIcon(predict.class_icon)">-->
+<!--              </div>-->
+<!--              <div class="predict__result__name">-->
+<!--                {{predict.class}}-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
         <div class="card">
-          <div class="title"><strong>Статистика результатов по схожим делам:</strong></div>
+          <div class="title"><strong>Интеллектуальный прогноз исхода дела:</strong></div>
           <ng-container *ngFor="let p of predicts">
             <div class="progress">
               <div class="progress__icon">
@@ -43,7 +43,7 @@
                 <div>{{p.result.name}}</div>
               </div>
               <div class="progress__bar">
-                <div class="progressbar">
+                <div class="progressbar" (click)="openActs(p.result.id)">
                   <span>{{p.percent}}%  ({{p.count}})</span>
                   <div class="progressbar__value" [ngStyle]="{width: p.percent + '%'}"></div>
                 </div>

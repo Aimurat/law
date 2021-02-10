@@ -12,6 +12,7 @@ export class MainHeaderComponent implements OnInit {
 
   public url;
   public isResult: boolean;
+  public isIResult: boolean;
   public isAct: boolean;
   public user: IUser;
 
@@ -27,14 +28,27 @@ export class MainHeaderComponent implements OnInit {
       if (this.url === '/search') {
         this.isResult = false;
         this.isAct = false;
+        this.isIResult = false;
       }
       if (this.url === '/result') {
         this.isResult = true;
         this.isAct = false;
+        this.isIResult = false;
+      }
+      if (this.url === '/i-result') {
+        this.isResult = false;
+        this.isAct = false;
+        this.isIResult = true;
       }
       if (this.url.includes('/act')) {
         this.isResult = true;
         this.isAct = true;
+        this.isIResult = false;
+      }
+      if (this.url.includes('/i-act')) {
+        this.isResult = false;
+        this.isAct = true;
+        this.isIResult = true;
       }
     });
   }

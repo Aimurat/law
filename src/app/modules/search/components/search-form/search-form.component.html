@@ -1,10 +1,10 @@
 <div class="workspace">
-  <div class="workspace__scrollbar" *ngIf="isLoaded">
+  <div *ngIf="isLoaded" class="workspace__scrollbar">
     <div class="card">
-      <mat-tab-group dynamicHeight [@.disabled]="true">
+      <mat-tab-group [@.disabled]="true" dynamicHeight>
         <mat-tab label="По ключевым словам">
           <div class="form">
-            <form [formGroup]="searchKeyForm" (ngSubmit)="onSubmit()">
+            <form (ngSubmit)="onSubmit()" [formGroup]="searchKeyForm">
               <mat-form-field>
                 <mat-label>Тип поиска *</mat-label>
                 <mat-select formControlName="textType">
@@ -14,7 +14,7 @@
               <mat-form-field>
                 <mat-label>Ключевые слова</mat-label>
                 <label>
-                  <input matInput placeholder="Введите ключевые слова" formControlName="input" required>
+                  <input formControlName="input" matInput placeholder="Введите ключевые слова" required>
                 </label>
               </mat-form-field>
               <mat-form-field>
@@ -31,28 +31,34 @@
                   <mat-option *ngFor="let item of yearsDict" [value]="item">{{item.id}}</mat-option>
                 </mat-select>
               </mat-form-field>
+
               <mat-form-field>
                 <mat-label>Категория</mat-label>
-                <mat-select formControlName="classifications">
+                <input [matAutocomplete]="auto2" aria-label="Number" formControlName="classifications" matInput
+                       placeholder="Выберите категорию"
+                       type="text">
+                <mat-autocomplete #auto2="matAutocomplete" [displayWith]="displayFn">
                   <mat-option [value]="selectedDefault">Выберите категорию</mat-option>
-                  <mat-option *ngFor="let c of classifications$" [value]="c">{{c.name}}</mat-option>
-                </mat-select>
+                  <mat-option *ngFor="let c of classifications | async" [value]="c">{{c.name}}</mat-option>
+                </mat-autocomplete>
               </mat-form-field>
+
               <mat-form-field>
                 <mat-label>Выберите судебный орган</mat-label>
-                <input type="text" placeholder="Выберите судебный орган" aria-label="Number" matInput
-                       formControlName="courts"
-                       [matAutocomplete]="auto">
+                <input [matAutocomplete]="auto" aria-label="Number" formControlName="courts" matInput
+                       placeholder="Выберите судебный орган"
+                       type="text">
                 <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
                   <mat-option [value]="selectedDefault">Выберите судебный орган</mat-option>
                   <mat-option *ngFor="let court of courts | async" [value]="court">{{court.name}}</mat-option>
                 </mat-autocomplete>
               </mat-form-field>
+
               <mat-form-field>
                 <mat-label>Выберите судью</mat-label>
-                <input type="text" placeholder="Выберите судью" aria-label="Number" matInput
-                       formControlName="judges"
-                       [matAutocomplete]="auto1">
+                <input [matAutocomplete]="auto1" aria-label="Number" formControlName="judges" matInput
+                       placeholder="Выберите судью"
+                       type="text">
                 <mat-autocomplete #auto1="matAutocomplete" [displayWith]="displayFn">
                   <mat-option [value]="selectedDefault">Выберите ФИО судьи</mat-option>
                   <mat-option *ngFor="let judge of judges | async" [value]="judge">{{judge.name}}</mat-option>
@@ -61,58 +67,66 @@
 
               <mat-form-field>
                 <mat-label>Результат рассмотрения</mat-label>
-                <mat-select formControlName="results">
+                <input [matAutocomplete]="auto3" aria-label="Number" formControlName="results" matInput
+                       placeholder="Выберите результат рассмотрения"
+                       type="text">
+                <mat-autocomplete #auto3="matAutocomplete" [displayWith]="displayFn">
                   <mat-option [value]="selectedDefault">Выберите результат рассмотрения</mat-option>
-                  <mat-option *ngFor="let result of results$" [value]="result">{{result.name}}</mat-option>
-                </mat-select>
+                  <mat-option *ngFor="let r of results | async" [value]="r">{{r.name}}</mat-option>
+                </mat-autocomplete>
               </mat-form-field>
 
               <mat-form-field>
                 <mat-label>Дата начала</mat-label>
-                <input matInput [matDatepicker]="picker" formControlName="start_date">
-                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <input [matDatepicker]="picker" formControlName="start_date" matInput>
+                <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
               </mat-form-field>
               <mat-form-field>
                 <mat-label>Дата завершения</mat-label>
-                <input matInput [matDatepicker]="picker2" formControlName="end_date">
-                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                <input [matDatepicker]="picker2" formControlName="end_date" matInput>
+                <mat-datepicker-toggle [for]="picker2" matSuffix></mat-datepicker-toggle>
                 <mat-datepicker #picker2></mat-datepicker>
               </mat-form-field>
-              <mat-checkbox [(ngModel)]="checkBox" [ngModelOptions]="{standalone: true}" (change)="changeCB()">
-                Поиск по синонимам
-              </mat-checkbox>
+              <ng-container *ngIf="searchKeyForm.controls['textType'].value.id == 1">
+                <div style="display: flex; align-items: center; justify-content: flex-end">
+                  <mat-checkbox [(ngModel)]="checkBox" [ngModelOptions]="{standalone: true}">
+                    Поиск по синонимам
+                  </mat-checkbox>
+                  <span style="font-size: 16px; color: red; margin-left: 10px; cursor: pointer" (click)="openCB()" *ngIf="checkBox">?</span>
+                </div>
+              </ng-container>
               <div *ngIf="synonyms.length > 0" style="margin: 15px 0">
                 <h3>Поиск так же будет проводиться по следующим словам:</h3>
-                <div *ngFor="let s of synonyms; let i = index;">{{i+1}}. {{s}}</div>
+                <div *ngFor="let s of synonyms; let i = index;">{{i + 1}}. {{s}}</div>
               </div>
-              <button type="submit" color="primary" mat-flat-button>Поиск</button>
+              <button color="primary" mat-flat-button type="submit">Поиск</button>
               <button (click)="onReset()" mat-stroked-button>Сбросить</button>
             </form>
           </div>
         </mat-tab>
         <mat-tab label="Интеллектуальный поиск">
           <div class="form">
-            <form [formGroup]="searchIntellectualForm" (ngSubmit)="onSubmitIntellectual()">
+            <form (ngSubmit)="onSubmitIntellectual()" [formGroup]="searchIntellectualForm">
               <mat-form-field appearance="fill">
                 <mat-label>Введите описание судебного дела</mat-label>
                 <label>
-                  <textarea rows="15" formControlName="textarea" matInput required></textarea>
+                  <textarea formControlName="textarea" matInput required rows="15"></textarea>
                 </label>
               </mat-form-field>
               <mat-form-field>
                 <mat-label>Дата начала</mat-label>
-                <input matInput [matDatepicker]="picker3" formControlName="start_date">
-                <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                <input [matDatepicker]="picker3" formControlName="start_date" matInput>
+                <mat-datepicker-toggle [for]="picker3" matSuffix></mat-datepicker-toggle>
                 <mat-datepicker #picker3></mat-datepicker>
               </mat-form-field>
               <mat-form-field>
                 <mat-label>Дата завершения</mat-label>
-                <input matInput [matDatepicker]="picker4" formControlName="end_date">
-                <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
+                <input [matDatepicker]="picker4" formControlName="end_date" matInput>
+                <mat-datepicker-toggle [for]="picker4" matSuffix></mat-datepicker-toggle>
                 <mat-datepicker #picker4></mat-datepicker>
               </mat-form-field>
-              <button type="submit" color="primary" mat-flat-button>Поиск</button>
+              <button color="primary" mat-flat-button type="submit">Поиск</button>
             </form>
           </div>
         </mat-tab>

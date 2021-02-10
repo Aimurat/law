@@ -4,6 +4,8 @@ import {Act, Category} from '../../models/models';
 import {MatDialog, MatTableDataSource} from '@angular/material';
 import {Router} from '@angular/router';
 import {ApiService} from '../../../../shared/services/api.service';
+import {SynonymsDialogComponent} from '../../dialogs/synonyms-dialog/synonyms-dialog.component';
+import {ActsDialogComponent} from '../../dialogs/acts-dialog/acts-dialog.component';
 
 @Component({
   selector: 'app-i-search-result',
@@ -14,6 +16,8 @@ export class ISearchResultComponent implements OnInit {
 
   public actGroups;
   public actGroupsAnomaly = [];
+
+  public acts;
 
   public category: Category = null;
   public categories: Category[] = [];
@@ -61,7 +65,7 @@ export class ISearchResultComponent implements OnInit {
       } else {
         this.categories = response;
       }
-      if (this.categories.length > 1) {
+      if (this.categories.length >= 1) {
         this.category = this.categories[0];
         this.getActs(this.categories[0]);
         this.loadResultPredict();
@@ -81,8 +85,10 @@ export class ISearchResultComponent implements OnInit {
     });
     category.isActive = true;
     this.dataService.getActs(category).subscribe(response => {
+
       const defaults = [];
-      const anomalies = [];
+      const anomalies: Act[] = [];
+
       response.acts.forEach(r => {
         if (r.anomaly === 1) {
           defaults.push(r);
@@ -90,17 +96,26 @@ export class ISearchResultComponent implements OnInit {
           anomalies.push(r);
         }
       });
-      this.stats.acts = defaults.length;
+
+      anomalies.sort((a, b) => {
+        if (a.anomaly < b.anomaly) {
+          return 1;
+        }
+        if (a.anomaly > b.anomaly) {
+          return -1;
+        }
+        return 0;
+      });
+
       this.stats.anomalies = anomalies.length;
       this.stats.anomalies_pct = Math.round(anomalies.length * 100 / defaults.length);
-      this.stats.v_anomalies = response.counts.vertical_anomaly_count;
-      this.stats.h_anomalies = response.counts.horizontal_anomaly_count;
-      this.stats.vh_anomalies = response.counts.red_anomaly_count;
-      this.stats.not_anomalies = defaults.length - anomalies.length;
+
+      this.stats.not_anomalies = defaults.length;
       this.stats.not_anomalies_pct = 100 - this.stats.anomalies_pct;
 
       this.predicts = response.results;
       this.actGroupsAnomaly = anomalies;
+      this.acts = response.acts;
       this.actGroups = new MatTableDataSource(defaults);
     });
   }
@@ -114,7 +129,7 @@ export class ISearchResultComponent implements OnInit {
   }
 
   openAct(item: Act, instance: string) {
-    return this.router.navigate(['/act', item.id, instance]);
+    return this.router.navigate(['/i-act', item.id, instance]);
   }
 
   download(item: Act) {
@@ -126,12 +141,27 @@ export class ISearchResultComponent implements OnInit {
   }
 
   getAnomalyColor(anomaly: number) {
-    if (anomaly === 2 || anomaly === 3) {
-      return 'warning';
+    if (anomaly == 2) {
+      return 'yellow';
+    }
+    if (anomaly === 3) {
+      return 'orange';
     }
     if (anomaly === 9) {
-      return 'danger';
+      return 'red';
     }
+  }
+
+  openActs(id: number) {
+    let acts = this.acts.filter(a => a.result.id === id);
+    console.log(acts);
+    this.dialog.open(ActsDialogComponent, {
+      autoFocus: false,
+      width: '1000px',
+      data: {
+        acts: acts
+      }
+    });
   }
 
 }

@@ -1,0 +1,56 @@
+<div mat-dialog-title>Акты</div>
+<mat-dialog-content class="mat-typography padding">
+  <div class="content">
+    <table mat-table [dataSource]="acts">
+      <ng-container matColumnDef="act_number">
+        <th width="15%" mat-header-cell *matHeaderCellDef>Номер дела</th>
+        <td mat-cell *matCellDef="let element">
+          <div>{{element['act_number']}}</div>
+          <div class="date">
+            <span class="icon-calendar"></span>
+            {{element['registration_date'] | date: 'dd.MM.yyyy'}}
+          </div>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="claimant">
+        <th mat-header-cell *matHeaderCellDef>Стороны процесса</th>
+        <td mat-cell *matCellDef="let element">
+          <div class="claimant"><span class="icon-user"></span> {{capitalize(element['claimant'])}}</div>
+          <div class="defendant"><span class="icon-user"></span> {{capitalize(element['defendant'])}}
+          </div>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="result">
+        <th width="30%" mat-header-cell *matHeaderCellDef>Результат рассмотрения</th>
+        <td mat-cell *matCellDef="let element">
+          <div>
+            <span class="icon-home"></span>
+            <ng-container *ngIf="element['court']">
+              {{element['court']['name']}}
+            </ng-container>
+          </div>
+          <div><span class="icon-folder"></span> {{element['result']['name']}}</div>
+          <div class="gray">{{element['classification']['name']}}</div>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="tools">
+        <th width="10%" mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let element">
+          <div class="buttons">
+            <div class="btn" (click)="openAct(element, 'first_instances')">
+              <span class="icon-external-link"></span>
+            </div>
+            <div class="btn" (click)="download(element)">
+              <span class="icon-download"></span>
+            </div>
+          </div>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+      <tr mat-row *matRowDef="let row, columns: displayedColumns;"></tr>
+    </table>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Закрыть</button>
+</mat-dialog-actions>
